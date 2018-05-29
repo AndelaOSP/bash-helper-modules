@@ -175,8 +175,9 @@ deployToKubernetesCluster() {
     require "GOOGLE_CLUSTER_NAME" $GOOGLE_CLUSTER_NAME
 
     info "Deploying image $IMAGE to $ENVIRONMENT environment on $GOOGLE_CLUSTER_NAME cluster"
-    CMD="kubectl set image deployment/$DEPLOYMENT_NAME $__containerName=$IMAGE_NAME --namespace $NAMESPACE"
-    echo $CMD
+
+    kubectl set image deployment/$DEPLOYMENT_NAME $__containerName=$IMAGE_NAME --namespace $NAMESPACE
+
     if [ "$?" == "0" ]; then
         success "Image ${IMAGE_NAME} was successfuly deployed to ${ENVIRONMENT} environment"
         exit 0
@@ -198,6 +199,7 @@ authWithServiceAccount() {
     require 'GCLOUD_SERVICE_KEY' $GCLOUD_SERVICE_KEY
     echo $GCLOUD_SERVICE_KEY | base64 --decode > $__serviceKeyPath
     gcloud auth activate-service-account --key-file $__serviceKeyPath
+    is_success "Service account activated successfuly"
 }
 
 configureGoogleCloudSdk() {
