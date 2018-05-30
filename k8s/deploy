@@ -8,20 +8,21 @@ NC='\e[0m'
 
 
 info() {
-    printf "\n${BOLD}${BLUE}====> $@ ${NC}\n"
+    printf "\n${BOLD}${BLUE}====> $(echo $@ ) ${NC}\n"
 }
 
 warning () {
-    printf "\n${BOLD}${YELLOW}====> $@ ${NC}\n"
+    printf "\n${BOLD}${YELLOW}====> $(echo $@ )  ${NC}\n"
 }
 
 error() {
-    printf "\n${BOLD}${RED}====> $@ ${NC}\n"
+
+    printf "\n${BOLD}${RED}====> $(echo $@ )  ${NC}\n"
     exit 1
 }
 
 success () {
-    printf "\n${BOLD}${GREEN}====> $@ ${NC}\n"
+    printf "\n${BOLD}${GREEN}====> $(echo $@ ) ${NC}\n"
 }
 
 is_success_or_fail() {
@@ -174,8 +175,9 @@ deployToKubernetesCluster() {
     require "GOOGLE_CLUSTER_NAME" $GOOGLE_CLUSTER_NAME
 
     info "Deploying image $IMAGE to $ENVIRONMENT environment on $GOOGLE_CLUSTER_NAME cluster"
-    CMD="kubectl set image deployment/$DEPLOYMENT_NAME $__containerName=$IMAGE_NAME --namespace $NAMESPACE"
-    echo $CMD
+
+    kubectl set image deployment/$DEPLOYMENT_NAME $__containerName=$IMAGE_NAME --namespace $NAMESPACE
+
     if [ "$?" == "0" ]; then
         success "Image ${IMAGE_NAME} was successfuly deployed to ${ENVIRONMENT} environment"
         exit 0
@@ -197,6 +199,7 @@ authWithServiceAccount() {
     require 'GCLOUD_SERVICE_KEY' $GCLOUD_SERVICE_KEY
     echo $GCLOUD_SERVICE_KEY | base64 --decode > $__serviceKeyPath
     gcloud auth activate-service-account --key-file $__serviceKeyPath
+    is_success "Service account activated successfuly"
 }
 
 configureGoogleCloudSdk() {
