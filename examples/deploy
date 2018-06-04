@@ -22,6 +22,8 @@ source $DEPLOY_SCRIPT_PATH
 GCLOUD_SERVICE_KEY_NAME=gcloud-service-key.json
 ALLOWED_DEPLOY_ENVIRONMENTS=('staging', 'production')
 
+# uncomment require-channel below to enable sending of slack notifications
+# require 'CHANNEL' $CHANNEL
 require 'PRODUCTION_GOOGLE_COMPUTE_ZONE' $PRODUCTION_GOOGLE_COMPUTE_ZONE
 require 'STAGING_GOOGLE_COMPUTE_ZONE' $STAGING_GOOGLE_COMPUTE_ZONE
 require 'STAGING_CLUSTER_NAME' $STAGING_CLUSTER_NAME
@@ -51,3 +53,5 @@ main() {
 }
 
 main
+
+
