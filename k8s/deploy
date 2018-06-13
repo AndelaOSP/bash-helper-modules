@@ -226,10 +226,12 @@ isAllowedDeployEnvironment() {
 }
 
 configureSlackNotifications() {
-    EMOJIS=(":celebrate:"  ":party_dinosaur:" ":hammer-time:"  ":andela:" ":victory-danch:" ":aw-yeah:" ":carlton-dance:" ":yes:" ":partyparrot:" ":dancing-penguin:" ":aww-yeah-remix:" )
+    # declare emoji list 
+    # EMOJIS=(":celebrate:"  ":party_dinosaur:" ":hammer-time:"  ":andela:" ":victory-danch:" ":aw-yeah:" ":carlton-dance:" ":partyparrot:" ":dancing-penguin:" ":aww-yeah-remix:" )
+    EMOJIS=(${EMOJI_1}  ${EMOJI_2} ${EMOJI_3}  ${EMOJI_4} ${EMOJI_5} ${EMOJI_6} ${EMOJI_7} ${EMOJI_8} ${EMOJI_9} ${EMOJI_1]10} )
     RANDOM=$$$(date +%s)
     EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]} ]}
-    COMMIT_LINK="https://github.com/AndelaOSP/${CIRCLE_PROJECT_REPONAME}/commit/${CIRCLE_SHA1}"
+    COMMIT_LINK="https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}/commit/${CIRCLE_SHA1}"
     DEPLOYMENT_TEXT="Tag: ${IMG_TAG} has just been deployed to ${CONTAINER_NAME} in ${ENVIRONMENT}  $COMMIT_LINK "
     SLACK_DEPLOYMENT_TEXT="Tag: <$COMMIT_LINK|${IMG_TAG}> has just been deployed to *${CONTAINER_NAME}* in *${ENVIRONMENT}* ${EMOJI}"
 
