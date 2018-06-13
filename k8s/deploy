@@ -239,6 +239,6 @@ configureSlackNotifications() {
     # send deploy data to slack
     echo "sending deployment notification to configured slack channel"
     curl -X POST --data-urlencode \
-    "payload={\"channel\": \"${CHANNEL}\", \"username\": \"DeployNotification\", \"text\": \"${SLACK_DEPLOYMENT_TEXT}\", \"icon_emoji\": \":rocket:\"}" \
+    "payload={\"channel\": \"${CHANNEL}\", \"username\": \"DeploymentNotification\", \"text\": \"${SLACK_DEPLOYMENT_TEXT}\", \"icon_emoji\": \":airplane:\"}" \
     https://hooks.slack.com/services/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
 }
