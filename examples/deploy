@@ -61,6 +61,7 @@ main() {
     publishDockerImage
     logoutContainerRegistry $DOCKER_REGISTRY
     deployToKubernetesCluster backend
+    # configureSlackNotifications()
 }
 
 main
