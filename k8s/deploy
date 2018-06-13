@@ -233,7 +233,7 @@ configureSlackNotifications() {
     RANDOM=$$$(date +%s)
     EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]} ]}
     COMMIT_LINK="https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}/commit/${CIRCLE_SHA1}"
-    DEPLOYMENT_TEXT="Tag: ${IMAGE_NAME} has just been deployed to ${ENVIRONMENT}  $COMMIT_LINK "
+    DEPLOYMENT_TEXT="Tag: ${IMAGE_NAME} has just been deployed to ${ENVIRONMENT} "
     SLACK_DEPLOYMENT_TEXT="Tag: ${IMAGE_NAME} has just been deployed to *${ENVIRONMENT}* ${EMOJI}"
 
     # send deploy data to slack
