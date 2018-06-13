@@ -24,6 +24,10 @@ ALLOWED_DEPLOY_ENVIRONMENTS=('staging', 'production')
 
 # uncomment require-channel below to enable sending of slack notifications
 # require 'CHANNEL' $CHANNEL
+# require 'SLACK_HOOK' $SLACK_HOOK
+# require 'EMOJI_1' $EMOJI_1
+# require 'EMOJI_2' $EMOJI_2
+# require 'EMOJI_3' $EMOJI_3
 require 'PRODUCTION_GOOGLE_COMPUTE_ZONE' $PRODUCTION_GOOGLE_COMPUTE_ZONE
 require 'STAGING_GOOGLE_COMPUTE_ZONE' $STAGING_GOOGLE_COMPUTE_ZONE
 require 'STAGING_CLUSTER_NAME' $STAGING_CLUSTER_NAME
