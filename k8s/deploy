@@ -38,7 +38,6 @@ require () {
     if [ -z ${2+x} ]; then error "Required variable ${1} has not been set"; fi
 }
 
-
 installGoogleCloudSdk(){
     info "Installing google cloud sdk"
     echo "deb http://packages.cloud.google.com/apt cloud-sdk-jessie main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
@@ -224,4 +223,23 @@ isAllowedDeployEnvironment() {
     require 'ALLOWED_DEPLOY_ENVIRONMENTS' $ALLOWED_DEPLOY_ENVIRONMENTS
     [ -z $(echo $ALLOWED_DEPLOY_ENVIRONMENTS | grep -o $__environment) ] && error "$__environment is not an allowed deployment environment"
     success "Setting up deployments for $__environment environment"
+}
+
+configureSlackNotifications() {
+    # declare any 10 emojis 
+    # for example; EMOJIS=(":celebrate:"  ":party_dinosaur:" ":hammer-time:"  ":andela:" ":victory-danch:" ":aw-yeah:" ":carlton-dance:" ":partyparrot:" ":dancing-penguin:" ":aww-yeah-remix:" )
+    EMOJIS=(${EMOJI_1}  ${EMOJI_2} ${EMOJI_3}  ${EMOJI_4} ${EMOJI_5} ${EMOJI_6} ${EMOJI_7} ${EMOJI_8} ${EMOJI_9} ${EMOJI_10} )
+
+    RANDOM=$$$(date +%s)
+    EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]} ]}
+    COMMIT_LINK="https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}/commit/${CIRCLE_SHA1}"
+    DEPLOYMENT_TEXT="Tag: ${IMAGE_NAME} has just been deployed to ${ENVIRONMENT} "
+    SLACK_DEPLOYMENT_TEXT="Tag: ${IMAGE_NAME} has just been deployed to *${ENVIRONMENT}* ${EMOJI}"
+
+
+    # send deploy data to slack
+    echo "sending deployment notification to configured slack channel"
+    curl -X POST --data-urlencode \
+    "payload={\"channel\": \"${CHANNEL}\", \"username\": \"DeploymentNotification\", \"text\": \"${SLACK_DEPLOYMENT_TEXT}\", \"icon_emoji\": \":airplane:\"}" \
+    ${SLACK_HOOK}
 }

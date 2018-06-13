@@ -22,6 +22,19 @@ source $DEPLOY_SCRIPT_PATH
 GCLOUD_SERVICE_KEY_NAME=gcloud-service-key.json
 ALLOWED_DEPLOY_ENVIRONMENTS=('staging', 'production')
 
+# uncomment require-channel below to enable sending of slack notifications
+# require 'CHANNEL' $CHANNEL
+# require 'SLACK_HOOK' $SLACK_HOOK
+# require 'EMOJI_1' $EMOJI_1
+# require 'EMOJI_2' $EMOJI_2
+# require 'EMOJI_3' $EMOJI_3
+# require 'EMOJI_4' $EMOJI_4
+# require 'EMOJI_5' $EMOJI_5
+# require 'EMOJI_6' $EMOJI_6
+# require 'EMOJI_7' $EMOJI_7
+# require 'EMOJI_8' $EMOJI_8
+# require 'EMOJI_9' $EMOJI_9
+# require 'EMOJI_10' $EMOJI_10
 require 'PRODUCTION_GOOGLE_COMPUTE_ZONE' $PRODUCTION_GOOGLE_COMPUTE_ZONE
 require 'STAGING_GOOGLE_COMPUTE_ZONE' $STAGING_GOOGLE_COMPUTE_ZONE
 require 'STAGING_CLUSTER_NAME' $STAGING_CLUSTER_NAME
@@ -48,6 +61,7 @@ main() {
     publishDockerImage
     logoutContainerRegistry $DOCKER_REGISTRY
     deployToKubernetesCluster backend
+    # configureSlackNotifications()
 }
 
 main
