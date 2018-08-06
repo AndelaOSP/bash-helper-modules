@@ -1,5 +1,5 @@
 # bash-helper-modules
-Contains Bash scripts helper functions for setup and deployments.
+Contains Bash scripts helper functions for k8s & CircleCI setup and deployments.
 
 file structure
 
