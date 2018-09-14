@@ -10,3 +10,4 @@ file structure
 - dockerfile
 
 > k8s (deploy)
+- deploy
