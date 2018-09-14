@@ -7,5 +7,6 @@ file structure
 - deploy
 
 > docker(image)
+- dockerfile
 
 > k8s (deploy)
