@@ -17,6 +17,8 @@ source $DEPLOY_SCRIPT_PATH
 # GOOGLE_PROJECT_ID
 # GCLOUD_SERVICE_KEY
 # DOCKER_REGISTRY
+# CHANNEL
+# SLACK_HOOK
 
 
 GCLOUD_SERVICE_KEY_NAME=gcloud-service-key.json
@@ -30,6 +32,11 @@ require 'PROJECT_NAME' $PROJECT_NAME
 require 'GOOGLE_PROJECT_ID' $GOOGLE_PROJECT_ID
 require 'DOCKER_REGISTRY' $DOCKER_REGISTRY
 require 'GCLOUD_SERVICE_KEY' $GCLOUD_SERVICE_KEY
+
+ # slackhook and channel have to be set as env variables
+ 
+require 'CHANNEL' $CHANNEL
+require 'SLACK_HOOK' $SLACK_HOOK
 
 BRANCH_NAME=$CIRCLE_BRANCH
 setEnvironment $BRANCH_NAME
@@ -48,6 +55,7 @@ main() {
     publishDockerImage
     logoutContainerRegistry $DOCKER_REGISTRY
     deployToKubernetesCluster backend
+    configureSlackNotifications
 }
 
 main

@@ -225,3 +225,22 @@ isAllowedDeployEnvironment() {
     [ -z $(echo ${ALLOWED_DEPLOY_ENVIRONMENTS[@]} | grep -o $__environment) ] && error "$__environment is not an allowed deployment environment"
     success "Setting up deployments for $__environment environment"
 }
+
+configureSlackNotifications() {
+
+    EMOJIS=(":celebrate:"  ":party_dinosaur:" ":hammer-time:"  ":andela:" ":victory-danch:" ":aw-yeah:" ":carlton-dance:" ":partyparrot:" ":dancing-penguin:" ":aww-yeah-remix:" )
+
+    RANDOM=$$$(date +%s)
+    EMOJI=${EMOJIS[$RANDOM % ${#EMOJIS[@]} ]}
+    COMMIT_LINK="https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}/commit/${CIRCLE_SHA1}"
+    DEPLOYMENT_TEXT="Tag: ${IMAGE_NAME} has just been deployed to ${ENVIRONMENT} ${CIRCLE_PROJECT_REPONAME}. Build Details ${COMMIT_LINK}"
+    SLACK_DEPLOYMENT_TEXT="Tag: ${IMAGE_NAME} has just been deployed to *${ENVIRONMENT}* ${EMOJI}"
+
+
+    # send deploy data to slack
+    # slackhook and channel have to be set as env variables
+    echo "sending deployment notification to configured slack channel"
+    curl -X POST --data-urlencode \
+    "payload={\"channel\": \"${CHANNEL}\", \"username\": \"DeploymentNotification\", \"text\": \"${SLACK_DEPLOYMENT_TEXT}\", \"icon_emoji\": \":airplane:\"}" \
+    ${SLACK_HOOK}
+}
